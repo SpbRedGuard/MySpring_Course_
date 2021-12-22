@@ -15,9 +15,21 @@ public class NewLoggingAspect {
     public Object aroundReturnBookLoggingAdvice (ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         System.out.println("aroundReturnBookLoggingAdvice: в библиотеку " + "пытяются вернуть книгу ");
 
-        Object targetMethodResult = proceedingJoinPoint.proceed();
+        long begin = System.currentTimeMillis();
+
+        Object targetMethodResult = null;
+        try {
+            targetMethodResult = proceedingJoinPoint.proceed();
+        } catch (Exception e) {
+            System.out.println("Было поймано исключение: " + e);
+            // targetMethodResult = "неизвестое название книги";
+            // - в этом случае из этого метода вернётс значение в вызвавший его метод класса UniLibrary
+            throw  e; // в этом случае пробросится исключение дальше
+        }
+        long end = System.currentTimeMillis();
 
         System.out.println("aroundReturnBookLoggingAdvice: в библиотеку " + "успешно вернули книгу ");
+        System.out.println("Метод aroundReturnBookLoggingAdvice выполнил работу за: " + (end-begin) + " мс");
         return targetMethodResult;
     }
 
