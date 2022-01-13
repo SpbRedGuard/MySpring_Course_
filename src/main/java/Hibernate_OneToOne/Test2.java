@@ -1,13 +1,13 @@
-package Hibernate_test2;
+package Hibernate_OneToOne;
 
 
-import Hibernate_test2.entity.Detail;
-import Hibernate_test2.entity.Employee;
+import Hibernate_OneToOne.entity.Detail;
+import Hibernate_OneToOne.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class Test3 {
+public class Test2 {
     public static void main(String[] args) {
 
         SessionFactory factory = new Configuration()
@@ -26,13 +26,11 @@ public class Test3 {
             //Создание сессии
             session = factory.getCurrentSession();
             // перед стартом транзакции можно создать объект для таблицы БД employee из объекта класса Employee
-            Employee employee = new Employee("Ekaterina", "Tsvetkova", "HR", 900);
+            Employee employee = new Employee("Maria", "Bulkina", "Sales", 1700);
 
             // и объект для таблицы detail из объекта класса detail
-            Detail detail = new Detail("Moscow", "9816345732", "Tsvetkova@Gmail.ru" );
-
+            Detail detail = new Detail("Piter", "9516555732", "Bulka@Gmail.ru" );
             employee.setEmpDetails(detail);
-            detail.setEmployee(employee);
 
             session.beginTransaction(); // открытие транзакции
             session.save(employee); // сохранение объекта в БД Employee в строковом виде
